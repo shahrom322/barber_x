@@ -15,6 +15,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField()
     image = models.ImageField(null=True, blank=True, upload_to='productphoto')
+    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, related_name='products')
 
     def __str__(self):
         return self.name

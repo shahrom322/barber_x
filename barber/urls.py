@@ -10,7 +10,7 @@ urlpatterns = [
     path('service/', views.ServiceView.as_view(), name='service'),
     path('service/<str:url>', views.ServiceView.as_view(), name='single_service'),
 
-    path('price/', views.price, name='price'),
+    path('price/', views.PriceView.as_view(), name='price'),
 
     path('team/', views.team, name='team'),
     # TODO делать страницу с профилем барбера?

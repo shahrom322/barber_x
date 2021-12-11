@@ -1,8 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 
-from barber.models import Barber, Service
+from barber.models import Barber, Service, Product
 
 
 def test(request):
@@ -35,8 +35,25 @@ class ServiceView(TemplateView):
         )
 
 
-def price(request):
-    return render(request, 'barber/price.html')
+class PriceByService(TemplateView):
+
+    def get(self, request, url):
+        service = get_object_or_404(Service, url=url)
+        products = Product.objects.all() # TODO filter(service=service)
+        return render(
+            request,
+            'barber/service.html',
+            {
+                'service': service,
+                'products': products
+            }
+        )
+
+
+class PriceView(TemplateView):
+
+    def price(self, request):
+        return render(request, 'barber/price.html')
 
 
 def team(request):
