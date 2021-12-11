@@ -1,17 +1,38 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic import TemplateView
+
+from barber.models import Barber, Service
 
 
 def test(request):
     return render(request, 'barber/index.html')
 
 
-def about(request):
-    return render(request, 'barber/about.html')
+class AboutView(TemplateView):
+
+    def get(self, request):
+        barbers = Barber.objects.all()
+        return render(
+            self.request,
+            'barber/about.html',
+            {
+                'barbers': barbers
+            }
+        )
 
 
-def service(request):
-    return render(request, 'barber/service.html')
+class ServiceView(TemplateView):
+
+    def get(self, request):
+        services = Service.objects.all()
+        return render(
+            request,
+            'barber/service.html',
+            {
+                'services': services
+            }
+        )
 
 
 def price(request):
