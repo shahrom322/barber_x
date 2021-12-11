@@ -34,7 +34,7 @@ class Application(models.Model):
     name = models.CharField(max_length=150, null=False)
     email = models.EmailField(max_length=150, null=True)
     subject = models.CharField(max_length=150, null=True)
-    barber = models.ForeignKey(Barber, on_delete=True)
+    barber = models.ForeignKey(Barber, on_delete=models.CASCADE)
     message = models.TextField()
 
 
@@ -42,7 +42,7 @@ class Post(models.Model):
     name = models.CharField(max_length=150, null=True)
     date = models.DateTimeField(auto_now_add=True)
     url = models.SlugField(max_length=160, unique=True)
-    service = models.ForeignKey(Service, verbose_name="service", on_delete=True)
+    service = models.ForeignKey(Service, verbose_name="service", on_delete=models.CASCADE)
 
 
 
