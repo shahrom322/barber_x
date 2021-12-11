@@ -5,10 +5,10 @@ from . import views
 urlpatterns = [
     path('', views.test, name='home'),
 
-    path('about/', views.about, name='about'),
+    path('about/', views.AboutView.as_view(), name='about'),
 
-    path('service/', views.service, name='service'),
-    path('service/<int:id>', views.service, name='single_service'),
+    path('service/', views.ServiceView.as_view(), name='service'),
+    path('service/<str:url>', views.ServiceView.as_view(), name='single_service'),
 
     path('price/', views.price, name='price'),
 
