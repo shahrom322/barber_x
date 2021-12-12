@@ -8,7 +8,7 @@ urlpatterns = [
     path('about/', views.AboutView.as_view(), name='about'),
 
     path('service/', views.ServiceView.as_view(), name='service'),
-    path('service/<str:url>', views.ServiceView.as_view(), name='single_service'),
+    path('service/<str:url>', views.PriceByService.as_view(), name='single_service'),
 
     path('price/', views.PriceView.as_view(), name='price'),
 
@@ -20,5 +20,5 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('blog/<str:slug>', views.single_page, name='single_page'),
 
-    path('contact/', views.contact, name='contact'),
+    path('contact/', views.ContactViev.as_view(), name='contact'),
 ]
