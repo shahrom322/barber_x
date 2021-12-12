@@ -20,5 +20,5 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('blog/<str:slug>', views.single_page, name='single_page'),
 
-    path('contact/', views.ContactViev.as_view(), name='contact'),
+    path('contact/', views.ContactView.as_view(), name='contact'),
 ]

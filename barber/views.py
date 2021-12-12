@@ -79,7 +79,7 @@ def single_page(request):
     return render(request, 'barber/single_page.html')
 
 
-class ContactViev(TemplateView):
+class ContactView(TemplateView):
 
     def get(self, request):
         form = ApplicationForm()
