@@ -112,3 +112,6 @@ class ContactView(TemplateView):
                 'form': form
             }
         )
+
+def p(self):
+    pass
