@@ -18,7 +18,7 @@ urlpatterns = [
     path('gallery/', views.gallery, name='gallery'),
 
     path('blog/', views.blog, name='blog'),
-    path('blog/<str:slug>', views.single_page, name='single_page'),
+    path('blog/<int:id>', views.SinglePageView.as_view(), name='single_page'),
 
     path('contact/', views.ContactView.as_view(), name='contact'),
 ]

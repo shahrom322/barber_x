@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 
 from barber.forms import ApplicationForm
-from barber.models import Barber, Service, Product
+from barber.models import Barber, Service, Product, Post
 
 
 def test(request):
@@ -75,8 +75,17 @@ def blog(request):
     return render(request, 'barber/blog.html')
 
 
-def single_page(request):
-    return render(request, 'barber/single_page.html')
+class SinglePageView(TemplateView):
+
+    def get(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        return render(
+            request,
+            'barber/single_page.html',
+            {
+                'post': post
+            }
+        )
 
 
 class ContactView(TemplateView):
