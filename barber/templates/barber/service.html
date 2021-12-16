@@ -36,7 +36,7 @@
                     <p>
                         {{ service.description }}
                     </p>
-                    <a class="btn" href="">Learn More</a>
+                    <a class="btn" href="{% url 'single_service' service.url %}">Learn More</a>
                 </div>
             </div>
             {% endfor %}

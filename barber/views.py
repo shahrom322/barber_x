@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 
 from barber.forms import ApplicationForm
-from barber.models import Barber, Service, Product, Post
+from barber.models import Barber, Service, Product, Post, PortfolioImage
 
 
 def test(request):
@@ -63,12 +63,34 @@ class PriceView(TemplateView):
         )
 
 
-def team(request):
-    return render(request, 'barber/team.html')
+class TeamView(TemplateView):
+
+    def get(self, request):
+        return render(
+            request,
+            'barber/team.html',
+            {'barbers': Barber.objects.all()}
+        )
 
 
-def gallery(request):
-    return render(request, 'barber/gallery.html')
+class GalleryView(TemplateView):
+
+    def get(self, request):
+        query = request.GET.get('q')
+        services = Service.objects.all()
+        if query:
+            portfolio_images = PortfolioImage.objects.filter(service__url=query)
+            print(portfolio_images)
+        else:
+            portfolio_images = PortfolioImage.objects.all()
+
+        return render(
+            request, 'barber/gallery.html',
+            {
+                'portfolio_images': portfolio_images,
+                'services': services
+            }
+        )
 
 
 def blog(request):
@@ -77,8 +99,8 @@ def blog(request):
 
 class SinglePageView(TemplateView):
 
-    def get(self, request, id):
-        post = get_object_or_404(Post, id=id)
+    def get(self, request, pk):
+        post = get_object_or_404(Post, id=pk)
         return render(
             request,
             'barber/single_page.html',

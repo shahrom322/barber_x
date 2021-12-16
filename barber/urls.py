@@ -12,10 +12,10 @@ urlpatterns = [
 
     path('price/', views.PriceView.as_view(), name='price'),
 
-    path('team/', views.team, name='team'),
+    path('team/', views.TeamView.as_view(), name='team'),
     # TODO делать страницу с профилем барбера?
 
-    path('gallery/', views.gallery, name='gallery'),
+    path('gallery/', views.GalleryView.as_view(), name='gallery'),
 
     path('blog/', views.blog, name='blog'),
     path('blog/<int:id>', views.SinglePageView.as_view(), name='single_page'),

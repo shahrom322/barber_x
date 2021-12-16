@@ -46,4 +46,7 @@ class Post(models.Model):
     text = models.TextField(null=True)
 
 
-
+class PortfolioImage(models.Model):
+    image = models.ImageField(upload_to='portfoliophoto')
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='portfolio_images')
+    title = models.CharField(max_length=50, null=True, blank=True)
