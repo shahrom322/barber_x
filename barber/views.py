@@ -1,9 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 
 from barber.forms import ApplicationForm
-from barber.models import Barber, Service, Product, Post, PortfolioImage
+from barber.models import Barber, Service, Product, Post
 
 
 def test(request):
@@ -63,51 +63,27 @@ class PriceView(TemplateView):
         )
 
 
-class TeamView(TemplateView):
+def team(request):
+    return render(request, 'barber/team.html')
 
+
+def gallery(request):
+    return render(request, 'barber/gallery.html')
+
+class BlogView(TemplateView):
     def get(self, request):
-        return render(
-            request,
-            'barber/team.html',
-            {'barbers': Barber.objects.all()}
-        )
+        return render(request, 'barber/blog.html', {'posts': Post.objects.all()})
 
 
-class GalleryView(TemplateView):
+class SinglePageView(DetailView):
+    model = Post
+    template_name = 'barber/single_page.html'
+    slug_url_kwarg = 'id'
+    context_object_name = 'post'
 
-    def get(self, request):
-        query = request.GET.get('q')
-        services = Service.objects.all()
-        if query:
-            portfolio_images = PortfolioImage.objects.filter(service__url=query)
-            print(portfolio_images)
-        else:
-            portfolio_images = PortfolioImage.objects.all()
-
-        return render(
-            request, 'barber/gallery.html',
-            {
-                'portfolio_images': portfolio_images,
-                'services': services
-            }
-        )
-
-
-def blog(request):
-    return render(request, 'barber/blog.html')
-
-
-class SinglePageView(TemplateView):
-
-    def get(self, request, pk):
-        post = get_object_or_404(Post, id=pk)
-        return render(
-            request,
-            'barber/single_page.html',
-            {
-                'post': post
-            }
-        )
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Post, id=id_)
 
 
 class ContactView(TemplateView):
@@ -134,6 +110,3 @@ class ContactView(TemplateView):
                 'form': form
             }
         )
-
-def p(self):
-    pass

@@ -12,13 +12,13 @@ urlpatterns = [
 
     path('price/', views.PriceView.as_view(), name='price'),
 
-    path('team/', views.TeamView.as_view(), name='team'),
+    path('team/', views.team, name='team'),
     # TODO делать страницу с профилем барбера?
 
-    path('gallery/', views.GalleryView.as_view(), name='gallery'),
+    path('gallery/', views.gallery, name='gallery'),
 
-    path('blog/', views.blog, name='blog'),
-    path('blog/<int:id>', views.SinglePageView.as_view(), name='single_page'),
+    path('blog/', views.BlogView.as_view(), name='blog'),
+    path('blog/<slug:id>/', views.SinglePageView.as_view(), name='single_page'),
 
     path('contact/', views.ContactView.as_view(), name='contact'),
 ]
