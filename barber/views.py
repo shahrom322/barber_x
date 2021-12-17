@@ -6,8 +6,34 @@ from barber.forms import ApplicationForm
 from barber.models import Barber, Service, Product, Post
 
 
-def test(request):
-    return render(request, 'barber/index.html')
+class MainView(TemplateView):
+
+    def get(self, request):
+
+        return render(
+            request,
+            'barber/index.html',
+            {
+                'services': Service.objects.all(),
+                'barbers': Barber.objects.all().select_related(),
+                'products': Product.objects.all(),
+                'posts': Post.objects.all(),
+                'form': ApplicationForm()
+            }
+        )
+
+    def post(self, request):
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+        return render(
+            request,
+            'barber/contact.html',
+            {
+                'form': form
+            }
+        )
 
 
 class AboutView(TemplateView):
