@@ -50,3 +50,10 @@ class PortfolioImage(models.Model):
     image = models.ImageField(upload_to='portfoliophoto')
     service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='portfolio_images')
     title = models.CharField(max_length=50, null=True, blank=True)
+
+
+class Mail(models.Model):
+    mail = models.EmailField()
+
+    def __str__(self):
+        return self.mail

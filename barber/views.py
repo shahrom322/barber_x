@@ -2,8 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, DetailView
 
-from barber.forms import ApplicationForm
-from barber.models import Barber, Service, Product, Post
+from barber.forms import ApplicationForm, NewsLetterForm
+from barber.models import Barber, Service, Product, Post, PortfolioImage
 
 
 class MainView(TemplateView):
@@ -34,6 +34,17 @@ class MainView(TemplateView):
                 'form': form
             }
         )
+
+
+class NewsLetterView(TemplateView):
+
+    def post(self, request):
+        form = NewsLetterForm(request.POST)
+        print(form)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+        return HttpResponse('Unexpected Error')
 
 
 class AboutView(TemplateView):
@@ -89,12 +100,36 @@ class PriceView(TemplateView):
         )
 
 
-def team(request):
-    return render(request, 'barber/team.html')
+class TeamView(TemplateView):
+
+    def get(self, request):
+        return render(
+            request,
+            'barber/team.html',
+            {'barbers': Barber.objects.all()}
+        )
 
 
-def gallery(request):
-    return render(request, 'barber/gallery.html')
+class GalleryView(TeamView):
+
+    def get(self, request):
+        query = request.GET.get('q')
+        services = Service.objects.all()
+        if query:
+            portfolio_images = PortfolioImage.objects.filter(service__url=query)
+            print(portfolio_images)
+        else:
+            portfolio_images = PortfolioImage.objects.all()
+            print(portfolio_images)
+        return render(
+            request,
+            'barber/gallery.html',
+            {
+                'portfolio_images': portfolio_images,
+                'services': services
+            }
+        )
+
 
 class BlogView(TemplateView):
     def get(self, request):

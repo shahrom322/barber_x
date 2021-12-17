@@ -39,7 +39,7 @@
                         rhoncus, lorem quam iaculis felis, sed lacus neque id eros.
                     </p>
                     <div class="form">
-                        <form method="get">
+                        <form method="POST">
                             {% csrf_token %}
                             {{ news_letter_form.mail }}
                             <button class="btn">Submit</button>

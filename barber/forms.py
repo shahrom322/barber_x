@@ -1,10 +1,9 @@
 from django import forms
 
-from barber.models import Application, Barber
+from barber.models import Application, Barber, Mail
 
 
 class ApplicationForm(forms.ModelForm):
-
     class Meta:
         model = Application
         fields = ('name', 'email', 'subject', 'barber', 'message')
@@ -52,10 +51,14 @@ class ApplicationForm(forms.ModelForm):
         )
 
 
-class NewsLetterForm(forms.Form):
-    mail = forms.CharField(
-        widget=forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Email goes here',
-        })
-    )
+class NewsLetterForm(forms.ModelForm):
+    class Meta:
+        model = Mail
+        fields = ('mail',)
+
+        widgets = {
+            'mail': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email goes here',
+            })
+        }
