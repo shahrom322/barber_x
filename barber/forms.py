@@ -50,3 +50,12 @@ class ApplicationForm(forms.ModelForm):
             barber=self.cleaned_data['barber'],
             message=self.cleaned_data['message']
         )
+
+
+class NewsLetterForm(forms.Form):
+    mail = forms.CharField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Email goes here',
+        })
+    )

@@ -39,8 +39,11 @@
                         rhoncus, lorem quam iaculis felis, sed lacus neque id eros.
                     </p>
                     <div class="form">
-                        <input class="form-control" placeholder="Email goes here">
-                        <button class="btn">Submit</button>
+                        <form method="get">
+                            {% csrf_token %}
+                            {{ news_letter_form.mail }}
+                            <button class="btn">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
