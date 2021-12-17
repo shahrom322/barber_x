@@ -21,5 +21,5 @@ urlpatterns = [
 
     path('contact/', views.ContactView.as_view(), name='contact'),
 
-    path('newsletter/', views.BlogView.as_view(), name='newsletter'),
+    path('newsletter/', views.NewsLetterView.as_view(), name='newsletter'),
 ]
